@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="興嘉國小電子閱讀護照公開閱讀成果網站">
+  <meta name="theme-color" content="#123f4a">
+  <title>電子閱讀護照｜興嘉國小閱讀成果</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要內容</a>
+  <div class="top-ribbon">興嘉國小閱讀教育成果平台 · 讓閱讀成為每天最美好的風景</div>
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="brand" href="#top" aria-label="電子閱讀護照首頁">
+        <span class="brand-mark" aria-hidden="true"><span>閱</span></span>
+        <span class="brand-copy"><strong>電子閱讀護照</strong><small>HSING CHIA READING PASSPORT</small></span>
+      </a>
+      <button id="menuButton" class="menu-button" type="button" aria-expanded="false" aria-controls="mainNav">☰</button>
+      <nav id="mainNav" class="main-nav" aria-label="主要導覽">
+        <a href="#overview">成果總覽</a><a href="#ranking">閱讀排行</a><a href="#analytics">數據探索</a><a href="#reviews">好文共讀</a>
+        <a id="studentTaskLink" href="student-tasks.html">學生任務</a><a id="systemLink" class="nav-login" href="#" hidden><span>管理登入</span><b>→</b></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section id="top" class="hero">
+      <div class="hero-pattern" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker"><span class="kicker-dot"></span> 2026 閱讀成果線上展</div>
+          <h1>翻開一本書，<br><em>看見更大的世界。</em></h1>
+          <p class="hero-lead">每一篇心得，都是孩子與世界的一次對話。一起探索全校閱讀足跡、優秀作品與各年級成長趨勢。</p>
+          <div class="hero-actions"><a class="button primary" href="#ranking">探索閱讀之星 <span>→</span></a><a class="button secondary" href="#reviews">閱讀精選心得</a></div>
+          <div class="hero-meta"><span class="live-dot"></span><span id="lastUpdated" aria-live="polite">資料載入中…</span></div>
+        </div>
+        <div class="hero-visual" aria-label="閱讀主視覺">
+          <div class="book-scene">
+            <div class="sun-orb"></div>
+            <div class="book book-back"></div>
+            <div class="book book-mid"></div>
+            <div class="open-book"><div class="page left-page"><span>READ</span></div><div class="page right-page"><span>GROW</span></div></div>
+            <span class="spark spark-a">✦</span><span class="spark spark-b">✦</span><span class="spark spark-c">✦</span>
+          </div>
+          <div class="quote-card"><span class="quote-icon">“</span><p id="quoteText">閱讀，是隨身攜帶的避難所。</p><span id="quoteAuthor">— 毛姆</span></div>
+        </div>
+      </div>
+      <div class="hero-wave" aria-hidden="true"></div>
+    </section>
+
+    <section id="overview" class="section overview-section">
+      <div class="container">
+        <div class="section-heading centered"><span class="section-tag">READING IMPACT</span><h2>今天，我們一起讀了多少？</h2><p>每一筆數字，都是孩子持續閱讀與分享的累積。</p></div>
+        <div id="summaryCards" class="summary-grid" aria-live="polite">
+          <article class="summary-card skeleton"></article><article class="summary-card skeleton"></article><article class="summary-card skeleton"></article><article class="summary-card skeleton"></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="ranking" class="section ranking-section">
+      <div class="container">
+        <div class="section-heading split"><div><span class="section-tag light">READING STARS</span><h2>校園閱讀之星</h2><p>以閱讀量、頁數與心得分享，記錄每一份努力。</p></div><div class="heading-note">學生姓名已自動遮罩，安心分享成果</div></div>
+        <div class="ranking-shell">
+          <div class="toolbar dark-toolbar">
+            <div class="segmented" role="group" aria-label="排行榜期間"><button class="period-btn active" data-period="semester">本學期</button><button class="period-btn" data-period="month">本月</button><button class="period-btn" data-period="week">本週</button></div>
+            <label>排序依據<select id="rankingMetric"><option value="books">閱讀本數</option><option value="pages">閱讀頁數</option><option value="articles">心得篇數</option></select></label>
+          </div>
+          <div class="ranking-content">
+            <div id="podium" class="podium" aria-label="前三名閱讀之星"></div>
+            <div class="table-wrap ranking-table-wrap"><table><thead><tr><th>名次</th><th>年級班級</th><th>閱讀之星</th><th>閱讀本數</th><th>累積頁數</th><th>心得篇數</th></tr></thead><tbody id="rankingBody"><tr><td colspan="6" class="loading-cell">排行榜載入中…</td></tr></tbody></table></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="analytics" class="section analytics-section">
+      <div class="container">
+        <div class="section-heading centered"><span class="section-tag">DATA STORY</span><h2>用數據看見閱讀成長</h2><p>從年級、月份到閱讀主題，理解校園中的閱讀風景。</p></div>
+        <div class="chart-grid">
+          <article class="chart-card chart-wide"><div class="card-heading"><div class="card-title-row"><span class="card-icon">▥</span><div><h3>年級閱讀量</h3><p>比較一至六年級閱讀成果</p></div></div><select id="gradeMetric"><option value="books">閱讀本數</option><option value="pages">閱讀頁數</option><option value="articles">心得篇數</option></select></div><div class="chart-box"><canvas id="gradeChart"></canvas></div></article>
+          <article class="chart-card"><div class="card-heading"><div class="card-title-row"><span class="card-icon coral">⌁</span><div><h3>每月閱讀趨勢</h3><p>本學年度公開心得篇數</p></div></div></div><div class="chart-box"><canvas id="monthlyChart"></canvas></div></article>
+          <article class="chart-card"><div class="card-heading"><div class="card-title-row"><span class="card-icon gold">◔</span><div><h3>書籍分類分布</h3><p>學生最常閱讀的主題</p></div></div></div><div class="chart-box"><canvas id="categoryChart"></canvas></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="section reviews-section">
+      <div class="container">
+        <div class="section-heading split"><div><span class="section-tag">STUDENT VOICES</span><h2>孩子眼中的一本好書</h2><p>精選最新閱讀心得，聽見學生真實而有溫度的聲音。</p></div><button id="refreshButton" class="refresh-button" type="button">↻ 更新內容</button></div>
+        <div class="reviews-layout">
+          <div class="latest-column"><div class="subheading"><h3>最新發表</h3><span>Latest stories</span></div><div id="latestReviews" class="review-grid"><article class="review-card skeleton"></article><article class="review-card skeleton"></article></div></div>
+          <aside class="popular-panel"><div class="popular-head"><div><span class="mini-label">MOST READ</span><h3>熱門點閱榜</h3></div><select id="popularPeriod"><option value="month">本月熱門</option><option value="all">累積熱門</option></select></div><ol id="popularReviews" class="popular-list"><li class="popular-loading">熱門心得載入中…</li></ol></aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><span class="brand-mark small"><span>閱</span></span><div><strong>興嘉國小電子閱讀護照</strong><p>培養閱讀習慣，看見每一個孩子的成長。</p></div></div><p>© <span id="year"></span> 興嘉國小教務處</p></div></footer>
+
+  <dialog id="reviewDialog" class="review-dialog"><form method="dialog"><button class="dialog-close" aria-label="關閉">×</button></form><article id="reviewDetail"></article></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
