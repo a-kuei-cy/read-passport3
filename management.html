@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123f4a">
+  <title>閱讀護照｜管理後台</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="management.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script>
+  <script src="config.js" defer></script>
+  <script src="management.js" defer></script>
+</head>
+<body>
+  <section id="loginView" class="login-view">
+    <div class="login-art"><div class="art-copy"><span>READ · LEAD · GROW</span><h1>讓每一本書，<br>成為孩子成長的足跡。</h1><p>興嘉國小電子閱讀護照管理中心</p></div></div>
+    <form id="loginForm" class="login-card">
+      <a class="back-home" href="index.html">← 返回成果首頁</a>
+      <div class="login-logo">閱</div><h2>管理後台登入</h2><p>請選擇身分並輸入管理金鑰。</p>
+      <label>登入身分<select id="loginRole"><option value="teacher">班級教師</option><option value="admin">系統管理者</option></select></label>
+      <label id="classField">管理班級<input id="loginClass" placeholder="例如：三年一班" autocomplete="organization"></label>
+      <label>管理金鑰<input id="loginKey" type="password" required autocomplete="current-password" placeholder="請輸入金鑰"></label>
+      <button type="submit">登入管理中心</button><div id="loginError" class="form-error"></div>
+    </form>
+  </section>
+
+  <div id="appView" class="app-view" hidden>
+    <aside class="sidebar">
+      <a class="side-brand" href="index.html"><span>閱</span><div><strong>閱讀護照</strong><small>管理中心</small></div></a>
+      <nav id="sideNav">
+        <button class="nav-item active" data-page="dashboard">▦ <span>儀表板</span></button>
+        <button class="nav-item" data-page="reviews">✓ <span>心得審核</span></button>
+        <button class="nav-item" data-page="tasks">◎ <span>閱讀任務</span></button>
+        <button class="nav-item admin-only" data-page="records">≡ <span>閱讀資料</span></button>
+        <button class="nav-item admin-only" data-page="students">♙ <span>學生管理</span></button>
+        <button class="nav-item admin-only" data-page="books">▤ <span>書籍管理</span></button>
+        <button class="nav-item" data-page="exports">⇩ <span>資料匯出</span></button>
+      </nav>
+      <div class="side-footer"><div id="userBadge"></div><button id="logoutButton">登出</button></div>
+    </aside>
+
+    <main class="main-shell">
+      <header class="topbar"><button id="sidebarToggle" class="icon-button">☰</button><div><h1 id="pageTitle">管理儀表板</h1><p id="pageSubtitle">掌握閱讀成果與待辦事項</p></div><div class="top-actions"><a href="index.html" target="_blank">查看前台 ↗</a><button id="refreshData">↻ 重新整理</button></div></header>
+
+      <section id="page-dashboard" class="page active">
+        <div id="statCards" class="stat-grid"></div>
+        <div class="dashboard-grid">
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">ACTION NEEDED</span><h2>待審核心得</h2></div><button data-jump="reviews">前往審核 →</button></div><div id="pendingPreview" class="compact-list"></div></article>
+          <article class="panel"><div class="panel-head"><div><span class="eyebrow">ACTIVE TASKS</span><h2>進行中的閱讀任務</h2></div><button data-jump="tasks">管理任務 →</button></div><div id="taskPreview" class="compact-list"></div></article>
+        </div>
+      </section>
+
+      <section id="page-reviews" class="page">
+        <div class="filter-bar"><input id="reviewSearch" type="search" placeholder="搜尋學生、書名或心得"><select id="reviewStatus"><option value="pending">待審核</option><option value="approved">已通過</option><option value="rejected">已退回</option><option value="all">全部</option></select><button id="reviewFilterButton">套用篩選</button></div>
+        <div class="table-panel"><table><thead><tr><th>學生</th><th>書籍／任務</th><th>心得摘要</th><th>篇數計入</th><th>狀態</th><th>操作</th></tr></thead><tbody id="reviewTable"></tbody></table></div>
+      </section>
+
+      <section id="page-tasks" class="page">
+        <div class="page-toolbar"><div><h2>指定閱讀任務</h2><p id="taskScopeHint">建立閱讀書籍與心得作業，核准後自動累積心得篇數。</p></div><button id="newTaskButton" class="primary-action">＋ 新增閱讀任務</button></div>
+        <div id="taskCards" class="task-grid"></div>
+      </section>
+
+      <section id="page-records" class="page admin-only">
+        <div class="filter-bar"><input id="recordSearch" type="search" placeholder="搜尋學生、班級、書名"><select id="recordStatus"><option value="all">全部狀態</option><option value="pending">待審核</option><option value="approved">已通過</option><option value="rejected">已退回</option></select><button id="recordFilterButton">套用篩選</button><button id="newRecordButton" class="primary-action">＋ 新增資料</button></div>
+        <div class="table-panel"><table><thead><tr><th>日期</th><th>學生</th><th>書名</th><th>頁數</th><th>來源</th><th>狀態</th><th>操作</th></tr></thead><tbody id="recordTable"></tbody></table></div>
+      </section>
+
+      <section id="page-students" class="page admin-only"><div class="page-toolbar"><div><h2>學生資料</h2><p>維護學生年級、班級與啟用狀態。</p></div><button id="newStudentButton" class="primary-action">＋ 新增學生</button></div><div class="table-panel"><table><thead><tr><th>學號</th><th>姓名</th><th>年級</th><th>班級</th><th>狀態</th><th>操作</th></tr></thead><tbody id="studentTable"></tbody></table></div></section>
+      <section id="page-books" class="page admin-only"><div class="page-toolbar"><div><h2>書籍資料</h2><p>維護指定閱讀與書目選單。</p></div><button id="newBookButton" class="primary-action">＋ 新增書籍</button></div><div class="table-panel"><table><thead><tr><th>ISBN</th><th>書名</th><th>作者</th><th>分類</th><th>頁數</th><th>操作</th></tr></thead><tbody id="bookTable"></tbody></table></div></section>
+
+      <section id="page-exports" class="page">
+        <div class="export-grid">
+          <article class="export-card"><span>01</span><h2>閱讀紀錄</h2><p>匯出學生、書籍、頁數、心得、任務與審核狀態。</p><button data-export="records">匯出 Excel</button></article>
+          <article class="export-card"><span>02</span><h2>學生資料</h2><p>匯出學號、姓名、年級、班級與啟用狀態。</p><button data-export="students">匯出 Excel</button></article>
+          <article class="export-card"><span>03</span><h2>閱讀任務</h2><p>匯出年級／班級任務、指定書籍、期限及完成數。</p><button data-export="tasks">匯出 Excel</button></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="editDialog"><form id="editForm" method="dialog"><div class="dialog-head"><div><span id="dialogEyebrow">EDIT</span><h2 id="dialogTitle">編輯資料</h2></div><button type="button" id="dialogClose">×</button></div><div id="dialogFields" class="dialog-fields"></div><div class="dialog-actions"><button type="button" id="dialogCancel">取消</button><button type="submit" class="primary-action">儲存變更</button></div></form></dialog>
+  <dialog id="reviewDialog"><form id="reviewForm"><div class="dialog-head"><div><span>REVIEW</span><h2>閱讀心得審核</h2></div><button type="button" data-close-review>×</button></div><div id="reviewDetail"></div><label>教師回饋<textarea id="reviewFeedback" rows="4" placeholder="可填寫鼓勵或退回修改原因"></textarea></label><div class="dialog-actions three"><button type="button" data-close-review>取消</button><button type="button" id="rejectReview" class="danger">退回修改</button><button type="submit" class="primary-action">通過並計入篇數</button></div></form></dialog>
+  <div id="toast" class="toast"></div>
+</body>
+</html>
