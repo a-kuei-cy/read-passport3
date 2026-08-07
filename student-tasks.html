@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#124b55">
+  <title>閱讀護照｜指定閱讀任務</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="student-tasks.css">
+  <script src="config.js" defer></script>
+  <script src="student-tasks.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><span>閱</span><div><strong>電子閱讀護照</strong><small>指定閱讀任務</small></div></a>
+    <a class="home-link" href="index.html">返回成果首頁</a>
+  </header>
+
+  <main>
+    <section id="studentLogin" class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">READING MISSION</span>
+        <h1>閱讀一本書，<br>留下自己的想法。</h1>
+        <p>輸入學號與班級，查看老師指定的閱讀書籍與心得任務。</p>
+      </div>
+      <form id="studentLoginForm" class="login-card">
+        <h2>學生任務登入</h2>
+        <label>學號<input id="studentId" required autocomplete="username" placeholder="請輸入學號"></label>
+        <label>班級<input id="studentClass" required placeholder="例如：三年一班"></label>
+        <button type="submit">查看我的任務</button>
+        <p id="loginMessage" class="message"></p>
+      </form>
+    </section>
+
+    <section id="studentApp" class="student-app" hidden>
+      <div class="student-banner">
+        <div><span class="eyebrow">MY READING TASKS</span><h1 id="studentWelcome">我的閱讀任務</h1><p id="studentMeta"></p></div>
+        <button id="studentLogout">切換學生</button>
+      </div>
+      <div class="summary-row">
+        <article><span>指定任務</span><strong id="taskTotal">0</strong></article>
+        <article><span>待審核</span><strong id="taskPending">0</strong></article>
+        <article><span>已完成篇數</span><strong id="taskApproved">0</strong></article>
+        <article><span>退回修改</span><strong id="taskRejected">0</strong></article>
+      </div>
+      <div id="taskList" class="task-list"></div>
+    </section>
+  </main>
+
+  <dialog id="submissionDialog">
+    <form id="submissionForm">
+      <div class="dialog-head"><div><span>SUBMIT REVIEW</span><h2 id="submissionTitle">繳交閱讀心得</h2></div><button type="button" id="submissionClose">×</button></div>
+      <div id="taskDetail" class="task-detail"></div>
+      <input id="submissionTaskId" type="hidden">
+      <label>心得標題<input id="reviewTitle" maxlength="80" required></label>
+      <label>實際閱讀頁數<input id="reviewPages" type="number" min="0" max="9999" required></label>
+      <label>閱讀心得<textarea id="reviewContent" rows="10" minlength="30" required placeholder="請寫下書中內容、最有感受的段落，以及自己的想法（至少 30 字）"></textarea></label>
+      <label class="checkbox"><input id="reviewPublic" type="checkbox">審核通過後，同意在成果首頁公開（姓名將遮罩）</label>
+      <div id="teacherFeedback" class="feedback" hidden></div>
+      <div class="dialog-actions"><button type="button" id="submissionCancel">取消</button><button type="submit">送出給老師審核</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast"></div>
+</body>
+</html>
