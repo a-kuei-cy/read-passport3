@@ -1,0 +1,59 @@
+工作表,欄位,用途
+ReadingRecords,recordId,閱讀紀錄唯一識別碼
+ReadingRecords,studentId,學生學號
+ReadingRecords,studentName,學生姓名
+ReadingRecords,grade,學生年級
+ReadingRecords,className,學生班級
+ReadingRecords,bookTitle,閱讀書名
+ReadingRecords,isbn,ISBN
+ReadingRecords,author,作者
+ReadingRecords,category,書籍分類
+ReadingRecords,pages,閱讀頁數
+ReadingRecords,title,心得標題
+ReadingRecords,reviewContent,心得全文
+ReadingRecords,reviewSummary,心得摘要
+ReadingRecords,status,pending／approved／rejected
+ReadingRecords,isPublic,是否公開成果首頁
+ReadingRecords,publishedAt,公開時間
+ReadingRecords,viewCount,公開心得點閱數
+ReadingRecords,createdAt,建立時間
+ReadingRecords,approvedAt,核准時間
+ReadingRecords,taskId,來源閱讀任務 ID
+ReadingRecords,source,task 或 free
+ReadingRecords,teacherFeedback,教師回饋
+ReadingRecords,reviewedBy,審核者
+ReadingRecords,reviewedAt,審核時間
+Students,studentId,學生學號
+Students,studentName,學生姓名
+Students,grade,年級
+Students,className,班級
+Students,active,是否啟用
+Books,bookId,書籍唯一識別碼
+Books,isbn,ISBN
+Books,bookTitle,書名
+Books,author,作者
+Books,category,分類
+Books,pages,頁數
+Books,active,是否啟用
+ReadingTasks,taskId,任務唯一識別碼
+ReadingTasks,title,任務名稱
+ReadingTasks,scopeType,grade 或 class
+ReadingTasks,scopeValue,指定年級或班級
+ReadingTasks,scopeLabel,前台顯示範圍
+ReadingTasks,bookTitle,指定書籍
+ReadingTasks,isbn,ISBN
+ReadingTasks,description,閱讀與心得要求
+ReadingTasks,dueDate,截止日期
+ReadingTasks,targetCount,預計完成篇數
+ReadingTasks,status,active 或 closed
+ReadingTasks,createdBy,建立者
+ReadingTasks,createdAt,建立時間
+ReadingTasks,updatedAt,更新時間
+ArticleViews,viewId,點閱唯一識別碼
+ArticleViews,recordId,心得紀錄 ID
+ArticleViews,viewerKey,匿名每日識別碼
+ArticleViews,viewDate,點閱日期
+ArticleViews,viewMonth,點閱月份
+ArticleViews,timestamp,點閱時間
+Settings,key,設定名稱
+Settings,value,設定值
